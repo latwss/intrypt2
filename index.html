@@ -1,0 +1,293 @@
+<!doctype html>
+<html lang="fi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>INTRY – Iisalmen Nuorison Tuki</title>
+<meta name="description" content="INTRY tukee nuoria Iisalmessa – työpajoja, arjen tukea ja polkuja kohti opintoja ja työelämää.">
+<meta name="theme-color" content="#ff4fd8">
+
+<style>
+:root{
+  --pink:#ff4fd8;
+  --turq:#2befff;
+  --vio:#b57bff;
+  --ink:#0b1220;
+  --mut:#4b5a74;
+  --line:rgba(10,18,32,.12);
+  --rad:22px;
+  --shadow:0 20px 60px rgba(12,18,40,.16);
+  --ease:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
+  color:var(--ink);
+  background:
+    radial-gradient(1000px 600px at 10% -10%, rgba(255,79,216,.25), transparent 60%),
+    radial-gradient(900px 600px at 90% -10%, rgba(43,239,255,.25), transparent 60%),
+    linear-gradient(180deg,#fff,#f7f7ff);
+}
+a{text-decoration:none;color:inherit}
+.container{width:min(1180px,100%);margin:auto;padding:0 18px}
+
+/* ===== SKIP ===== */
+.skip{
+  position:absolute;left:-9999px;top:10px;
+  background:#fff;padding:10px 14px;border-radius:999px;
+  border:1px solid var(--line);box-shadow:var(--shadow);z-index:999
+}
+.skip:focus{left:12px}
+
+/* ===== TOPBAR & PC NAV ===== */
+.topbar{
+  position:sticky;top:0;z-index:50;
+  background:rgba(255,255,255,.85);
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line);
+}
+.topbar-inner{
+  height:64px;display:flex;align-items:center;justify-content:space-between
+}
+.brand{display:flex;align-items:center;gap:10px;font-weight:900}
+.dot{
+  width:12px;height:12px;border-radius:999px;
+  background:linear-gradient(135deg,var(--pink),var(--turq),var(--vio))
+}
+
+.pcNav{display:flex;gap:18px;font-weight:900}
+.navItem{position:relative;padding:8px 12px;border-radius:999px;cursor:pointer}
+.navItem:hover{background:rgba(255,255,255,.9)}
+
+.dropdown{
+  position:absolute;top:44px;left:0;min-width:240px;
+  background:rgba(255,255,255,.96);
+  border-radius:18px;padding:12px;
+  box-shadow:0 30px 80px rgba(0,0,0,.18);
+  display:none
+}
+.navItem:hover .dropdown{display:block}
+.dropdown a{
+  display:block;padding:10px 12px;border-radius:12px;font-weight:800
+}
+.dropdown a:hover{background:rgba(255,79,216,.12)}
+
+.adminBtn{
+  padding:8px 14px;border-radius:999px;
+  background:linear-gradient(90deg,var(--pink),var(--turq),var(--vio));
+  color:#07121f
+}
+
+/* ===== HERO ===== */
+.hero{padding:80px 0 40px}
+.heroCard{
+  position:relative;padding:32px;border-radius:var(--rad);
+  background:rgba(255,255,255,.75);
+  backdrop-filter:blur(16px);
+  box-shadow:var(--shadow);overflow:hidden
+}
+.heroGlow{
+  position:absolute;inset:-140px;
+  background:
+    radial-gradient(320px 260px at 20% 20%, rgba(255,79,216,.45), transparent 70%),
+    radial-gradient(360px 260px at 85% 15%, rgba(43,239,255,.35), transparent 70%),
+    radial-gradient(300px 240px at 70% 90%, rgba(181,123,255,.28), transparent 70%);
+  pointer-events:none
+}
+.pillRow{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.pill{
+  padding:8px 12px;border-radius:999px;
+  background:rgba(255,255,255,.85);
+  border:1px solid var(--line);font-weight:800;font-size:12px
+}
+h1{font-size:clamp(32px,4.5vw,58px);margin:0 0 12px}
+.ingress{font-size:17px;color:var(--mut);max-width:70ch;margin-bottom:20px}
+.ctaRow a{
+  display:inline-block;padding:12px 18px;border-radius:999px;
+  font-weight:900;
+  background:linear-gradient(90deg,var(--pink),var(--turq),var(--vio));
+  color:#07121f;margin-right:10px
+}
+
+/* ===== SECTIONS ===== */
+section{padding:60px 0}
+h2{text-align:center;margin-bottom:10px}
+.lead{text-align:center;color:var(--mut);max-width:90ch;margin:0 auto 30px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+@media(max-width:900px){.grid{grid-template-columns:1fr}}
+
+/* ===== RICH CARD ===== */
+.richCard{
+  padding:22px;border-radius:22px;
+  background:rgba(255,255,255,.9);
+  backdrop-filter:blur(14px);
+  border:1px solid var(--line);
+  box-shadow:0 18px 50px rgba(0,0,0,.14);
+  transition:transform .35s var(--ease), box-shadow .35s var(--ease)
+}
+.richCard:hover{
+  transform:translateY(-6px);
+  box-shadow:0 30px 80px rgba(0,0,0,.18)
+}
+.richCard h3{margin:0 0 8px}
+.richCard p{margin:0 0 10px;color:var(--mut);line-height:1.6}
+.richCard ul{margin:0 0 14px;padding-left:18px;color:var(--mut)}
+.richCard li{margin-bottom:6px}
+.richCard .cta{font-weight:900;font-size:13px;color:#ff2fbf}
+
+/* ===== FOOTER ===== */
+footer{text-align:center;padding:30px 0;color:var(--mut);font-weight:700}
+</style>
+</head>
+
+<body>
+
+<a href="#etusivu" class="skip">Siirry pääsisältöön</a>
+
+<div class="topbar">
+  <div class="container topbar-inner">
+    <div class="brand"><span class="dot"></span>INTRY</div>
+
+    <nav class="pcNav">
+      <div class="navItem">Palvelut
+        <div class="dropdown">
+          <a href="#palvelut">Arjen tuki</a>
+          <a href="#palvelut">Työpajat</a>
+          <a href="#palvelut">Ohjaus</a>
+        </div>
+      </div>
+
+      <div class="navItem">Toiminta
+        <div class="dropdown">
+          <a href="#yhdistys">Yhdistys</a>
+          <a href="#tyopajat">Työpajat</a>
+          <a href="#axonia">Äxöniä</a>
+          <a href="#omakshomma">Omaks Hommaks</a>
+          <a href="#autotasku">Autotasku</a>
+        </div>
+      </div>
+
+      <a href="#yhteys">Yhteys</a>
+
+      <!-- ✅ TÄMÄ TOIMII -->
+      <a href="/admin/" class="adminBtn">Kirjaudu</a>
+    </nav>
+  </div>
+</div>
+
+<header class="hero" id="etusivu">
+  <div class="container">
+    <div class="heroCard">
+      <div class="heroGlow"></div>
+
+      <div class="pillRow">
+        <span class="pill">✨ INTRY • Iisalmi</span>
+        <span class="pill">💗 Nuorten tukena arjessa</span>
+        <span class="pill">⚡ Sisältö päivittyy helposti</span>
+      </div>
+
+      <h1 id="hero-title">INTRY – Iisalmen Nuorison Tuki</h1>
+      <p class="ingress" id="hero-ingress">
+        Nuorten tukipalveluita, työpajoja ja toimintaa Iisalmessa.
+      </p>
+
+      <div class="ctaRow">
+        <a href="#toiminta">Tutustu toimintaan</a>
+        <a href="#yhteys">Ota yhteyttä</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section id="palvelut">
+  <div class="container">
+    <h2>Palvelut</h2>
+    <p class="lead">INTRY tarjoaa nuorille matalan kynnyksen tukea, ohjausta ja tekemistä.</p>
+
+    <div class="grid">
+      <div class="richCard"><h3>Arjen tuki</h3><p>Tukea asiointiin ja arjen hallintaan.</p></div>
+      <div class="richCard"><h3>Työpajat</h3><p>Tekemällä oppimista turvallisessa ympäristössä.</p></div>
+      <div class="richCard"><h3>Ohjaus</h3><p>Rinnalla kulkemista kohti opintoja ja työelämää.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="toiminta">
+  <div class="container">
+    <h2>Toiminta</h2>
+    <p class="lead">Alla olevat sisällöt tulevat suoraan ylläpidosta.</p>
+
+    <h3 id="yhdistys">Yhdistys</h3>
+    <p id="lead-yhdistys"></p>
+    <div class="grid" id="cards-yhdistys"></div>
+
+    <h3 id="tyopajat">Työpajat</h3>
+    <p id="lead-tyopajat"></p>
+    <div class="grid" id="cards-tyopajat"></div>
+  </div>
+</section>
+
+<section id="yhteys">
+  <div class="container">
+    <h2>Yhteys</h2>
+    <div class="grid">
+      <div class="richCard"><h3>Osoite</h3><p>Karjalankatu 36, Iisalmi</p></div>
+      <div class="richCard"><h3>Sähköposti</h3><p>anni.leppanen@intry.fi</p></div>
+      <div class="richCard"><h3>Puhelin</h3><p>044 733 1151</p></div>
+    </div>
+  </div>
+</section>
+
+<footer>© <span id="year"></span> INTRY – Iisalmen Nuorison Tuki</footer>
+
+<script>
+document.getElementById("year").textContent=new Date().getFullYear();
+
+const API="https://intry-content-api.late-hurskainen.workers.dev/content";
+const esc=s=>String(s||"").replace(/[&<>"]/g,m=>({ "&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[m]));
+
+fetch(API)
+  .then(r=>r.json())
+  .then(d=>{
+    if(d.heroTitle) document.getElementById("hero-title").textContent=d.heroTitle;
+
+    if(d.heroIngress) document.getElementById("hero-ingress").textContent=d.heroIngress;
+
+    if(d.leads){
+      for(const k in d.leads){
+        const el=document.getElementById("lead-"+k);
+        if(el) el.textContent=d.leads[k];
+      }
+    }
+
+    if(d.sections){
+      for(const s in d.sections){
+        const root=document.getElementById("cards-"+s);
+        if(!root) continue;
+        root.innerHTML="";
+        d.sections[s].forEach(c=>{
+          const el=document.createElement("div");
+          el.className="richCard";
+
+          let bullets="";
+          if(Array.isArray(c.bullets)){
+            bullets="<ul>"+c.bullets.map(b=>"<li>"+esc(b)+"</li>").join("")+"</ul>";
+          }
+
+          el.innerHTML=`
+            <h3>${esc(c.title)}</h3>
+            <p>${esc(c.text)}</p>
+            ${bullets}
+            ${c.cta?`<span class="cta">${esc(c.cta)} →</span>`:""}
+          `;
+          root.appendChild(el);
+        });
+      }
+    }
+  });
+</script>
+
+</body>
+</html>

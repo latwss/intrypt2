@@ -1,0 +1,718 @@
+<!doctype html>
+<html lang="fi">
+<head>
+  <meta charset="utf-8">
+  <title>INTRY – Admin v2</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <style>
+    /* ==========================================================
+       PERUSVÄRIT JA TYYLIT – premium tumma UI, INTRY-gradientit
+       ========================================================== */
+    :root{
+      --bg:#050814;
+      --panel:#0f1424;
+      --panel2:#10162a;
+      --fg:#e9eef6;
+      --mut:#9aa6b2;
+      --line:#1a2232;
+      --pink:#ff4fd8;
+      --turq:#2befff;
+      --vio:#b57bff;
+      --danger:#ff6b6b;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
+      background:
+        radial-gradient(circle at top,#141a2a 0,#050814 55%);
+      color:var(--fg);
+    }
+    a{color:inherit;text-decoration:none}
+
+    /* Layout: vasen sivupalkki + oikea sisältö */
+    .app{
+      display:flex;
+      min-height:100vh;
+    }
+    .sidebar{
+      width:230px;
+      background:#070b16;
+      border-right:1px solid var(--line);
+      padding:16px 14px;
+      display:flex;
+      flex-direction:column;
+      gap:16px;
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      font-weight:900;
+      letter-spacing:.2px;
+    }
+    .logo-dot{
+      width:16px;height:16px;border-radius:999px;
+      background:linear-gradient(135deg,var(--pink),var(--turq),var(--vio));
+      box-shadow:0 0 18px rgba(255,79,216,.6);
+    }
+    .brand span{
+      background:linear-gradient(90deg,var(--pink),var(--turq),var(--vio));
+      -webkit-background-clip:text;
+      color:transparent;
+    }
+    .nav{
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+      margin-top:4px;
+    }
+    .nav button{
+      width:100%;
+      padding:8px 10px;
+      border-radius:8px;
+      border:1px solid transparent;
+      background:transparent;
+      color:var(--mut);
+      text-align:left;
+      font-size:13px;
+      cursor:pointer;
+    }
+    .nav button.active{
+      background:#141a2a;
+      border-color:var(--line);
+      color:var(--fg);
+    }
+    .sidebar-footer{
+      margin-top:auto;
+      font-size:11px;
+      color:var(--mut);
+    }
+
+    /* Ylähdr ja sisältöalue */
+    .main{
+      flex:1;
+      display:flex;
+      flex-direction:column;
+    }
+    header{
+      padding:10px 16px;
+      border-bottom:1px solid var(--line);
+      background:rgba(5,8,20,.96);
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      position:sticky;
+      top:0;
+      z-index:20;
+      backdrop-filter:blur(14px);
+    }
+    header .status{
+      font-size:12px;
+      color:var(--mut);
+    }
+    header .status.ok{color:#6efacc;}
+    header .status.err{color:var(--danger);}
+    header button{
+      padding:6px 12px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:#111623;
+      color:var(--fg);
+      font-size:12px;
+      cursor:pointer;
+    }
+
+    main{
+      padding:18px 18px 40px;
+      max-width:1180px;
+      margin:0 auto;
+      width:100%;
+      display:flex;
+      flex-direction:column;
+      gap:16px;
+    }
+
+    .card{
+      background:rgba(11,15,30,.96);
+      border-radius:16px;
+      border:1px solid var(--line);
+      padding:16px 16px 14px;
+      box-shadow:0 18px 45px rgba(0,0,0,.55);
+    }
+    .card h3{
+      margin:0 0 8px;
+      font-size:16px;
+    }
+    .small{
+      font-size:12px;
+      color:var(--mut);
+    }
+    label{
+      font-size:13px;
+      font-weight:600;
+      display:block;
+      margin-top:6px;
+    }
+    input,textarea{
+      width:100%;
+      padding:9px 10px;
+      margin-top:3px;
+      background:#0b1020;
+      border-radius:8px;
+      border:1px solid var(--line);
+      color:var(--fg);
+      font-size:14px;
+    }
+    textarea{min-height:80px;resize:vertical;}
+    button.primary{
+      padding:10px 16px;
+      border-radius:999px;
+      border:none;
+      background:linear-gradient(90deg,var(--pink),var(--turq),var(--vio));
+      font-weight:900;
+      cursor:pointer;
+      color:#050814;
+    }
+    button.primary[disabled]{opacity:.6;cursor:wait;}
+
+    .grid-two{
+      display:grid;
+      grid-template-columns:1.1fr 1.3fr;
+      gap:14px;
+    }
+    @media(max-width:880px){
+      .app{flex-direction:column;}
+      .sidebar{width:100%;flex-direction:row;align-items:center;}
+      .nav{flex-direction:row;flex-wrap:wrap;}
+      .sidebar-footer{display:none;}
+      .grid-two{grid-template-columns:1fr;}
+    }
+
+    .section-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+      gap:12px;
+      margin-top:8px;
+    }
+
+    h4{
+      margin:10px 0 4px;
+      font-size:14px;
+      color:#d5d9ff;
+    }
+
+    .item-card{
+      border-radius:10px;
+      border:1px dashed rgba(255,255,255,.18);
+      padding:10px;
+      margin-top:6px;
+      background:#080c18;
+    }
+    .item-actions{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      margin-top:6px;
+      gap:6px;
+      flex-wrap:wrap;
+    }
+    .btn-small{
+      padding:4px 8px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:#111623;
+      color:var(--fg);
+      font-size:11px;
+      cursor:pointer;
+    }
+    .btn-small.danger{
+      border-color:var(--danger);
+      color:#ffb3b3;
+    }
+
+    /* LOGIN OVERLAY */
+    .view-login{
+      position:fixed;
+      inset:0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:radial-gradient(circle at top,#141a2a 0,#050814 80%);
+      z-index:40;
+    }
+    .login-box{
+      width:360px;
+      max-width:92%;
+      background:#0f1424;
+      border-radius:18px;
+      border:1px solid var(--line);
+      padding:20px 18px 16px;
+      box-shadow:0 22px 70px rgba(0,0,0,.8);
+    }
+    .login-box h2{margin:0 0 4px;}
+    .login-actions{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:8px;
+      margin-top:10px;
+    }
+    .error{
+      color:var(--danger);
+      margin-top:8px;
+      min-height:1.2em;
+      font-size:13px;
+    }
+  </style>
+</head>
+<body>
+
+<!-- LOGIN NÄKYMÄ -->
+<div class="view-login" id="login-view">
+  <div class="login-box">
+    <h2>INTRY – Admin</h2>
+    <p class="small">Syötä ylläpidon salasana. Tällä hallitaan kotisivun sisältöä.</p>
+
+    <label for="pw">Salasana</label>
+    <input id="pw" type="password" placeholder="•••••••••••">
+
+    <div class="login-actions">
+      <button class="primary" id="btn-login">Kirjaudu sisään</button>
+      <span class="small">Vain INTRYn henkilökunnalle</span>
+    </div>
+
+    <div class="error" id="login-error"></div>
+  </div>
+</div>
+
+<!-- VARSINAINEN ADMIN-SOVELLUS -->
+<div class="app" id="admin-app" style="display:none">
+  <!-- SIVUPALKKI -->
+  <aside class="sidebar">
+    <div>
+      <div class="brand">
+        <div class="logo-dot"></div>
+        <span>INTRY · Admin</span>
+      </div>
+      <div class="small" style="margin-top:4px;">
+        Sisältöjen hallinta • Hero, kuvaukset ja kortit
+      </div>
+    </div>
+
+    <div class="nav">
+      <button data-panel="hero" class="active">Hero</button>
+      <button data-panel="leads">Lead-tekstit</button>
+      <button data-panel="cards">Kortit</button>
+    </div>
+
+    <div class="sidebar-footer">
+      Versio 2 · Premium UI<br>
+      API: intry-content-api.late-hurskainen.workers.dev
+    </div>
+  </aside>
+
+  <!-- PÄÄSISÄLTÖ -->
+  <div class="main">
+    <header>
+      <div>
+        <div style="font-size:13px;font-weight:600;">Sisällönhallinta</div>
+        <div id="status" class="status">Ei vielä tallennettu</div>
+      </div>
+      <button id="btn-logout">Kirjaudu ulos</button>
+    </header>
+
+    <main>
+      <!-- INFO -->
+      <section class="card">
+        <h3>📘 Lyhyet ohjeet</h3>
+        <p class="small">
+          1) Kirjoita hero‑tekstit, 2) muokkaa osioiden lyhyet lead‑tekstit,
+          3) lisää / poista / järjestä kortteja. Lopuksi paina <b>Tallenna</b>.
+          Kotisivu hakee sisällön automaattisesti samasta API:sta.
+        </p>
+      </section>
+
+      <!-- HERO PANEL -->
+      <section class="card" data-panel-view="hero">
+        <h3>Hero</h3>
+        <div class="grid-two">
+          <div>
+            <label>Hero otsikko</label>
+            <input data-field="heroTitle" placeholder="INTRY – Iisalmen Nuorison Tuki ry">
+            <label>Hero ingressi</label>
+            <textarea data-field="heroIngress"
+              placeholder="Lyhyt kuvaus etusivun heroon"></textarea>
+          </div>
+          <div>
+            <label>CTA-nappi</label>
+            <input data-field="heroCta" placeholder="Tutustu / Ota yhteyttä">
+            <p class="small" style="margin-top:12px;">
+              Nämä vastaavat etusivun isoa otsikkoa, lyhyttä kuvausta ja nappia.
+              Voit testata muutoksia ja päivittää kotisivun erillisessä välilehdessä.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- LEAD PANEL -->
+      <section class="card" data-panel-view="leads" style="display:none">
+        <h3>Osioiden lead-tekstit</h3>
+        <p class="small">
+          Nämä tekstit näkyvät etusivulla jokaisen osion ensimmäisenä kappaleena
+          (elementit id-muodossa <code>lead-*</code>).
+        </p>
+        <div class="section-grid">
+          <div><label>Yhdistys</label><textarea data-lead="yhdistys"></textarea></div>
+          <div><label>Työpajat</label><textarea data-lead="tyopajat"></textarea></div>
+          <div><label>Äxöniä</label><textarea data-lead="axonia"></textarea></div>
+          <div><label>Omaks Hommaks</label><textarea data-lead="omakshomma"></textarea></div>
+          <div><label>Autotasku</label><textarea data-lead="autotasku"></textarea></div>
+          <div><label>Asuminen</label><textarea data-lead="asuminen"></textarea></div>
+          <div><label>Tuotteet</label><textarea data-lead="tuotteet"></textarea></div>
+          <div><label>Hankkeet</label><textarea data-lead="hankkeet"></textarea></div>
+          <div><label>Jäseneksi</label><textarea data-lead="jaseneksi"></textarea></div>
+          <div><label>Kesätyöt</label><textarea data-lead="kesatyot"></textarea></div>
+        </div>
+      </section>
+
+      <!-- CARDS PANEL -->
+      <section class="card" data-panel-view="cards" style="display:none">
+        <h3>Layout-kortit</h3>
+        <p class="small">
+          Kortit vastaavat etusivun laatikoita (esim. Arvot, Yhteistyö...).
+          Voit lisätä uusia kortteja, muuttaa otsikon + tekstin
+          ja siirtää kortteja ylös/alas.
+        </p>
+
+        <div data-section="yhdistys"></div>
+        <div data-section="tyopajat"></div>
+        <div data-section="axonia"></div>
+        <div data-section="omakshomma"></div>
+        <div data-section="autotasku"></div>
+        <div data-section="asuminen"></div>
+        <div data-section="tuotteet"></div>
+        <div data-section="hankkeet"></div>
+        <div data-section="jaseneksi"></div>
+        <div data-section="kesatyot"></div>
+      </section>
+
+      <!-- SAVE -->
+      <section class="card">
+        <button class="primary" id="btn-save">💾 Tallenna</button>
+        <p class="small">
+          Tallennus kirjoitetaan API:in. Kotisivu näyttää uudet tekstit seuraavalla latauksella.
+        </p>
+      </section>
+    </main>
+  </div>
+</div>
+
+<script>
+/* ==========================================================
+   INTRY ADMIN – LOGIIKKA
+   Käyttää seuraavia endpointteja (A-malli):
+   POST  /admin/login  { password } -> { token }
+   GET   /content      (Authorization: Bearer token)
+   POST  /content      { data: { heroTitle, heroIngress, heroCta, leads, sections } }
+   ========================================================== */
+
+// 1) Asetukset – jos API-osoite muuttuu, vaihda nämä
+const API_BASE    = "https://intry-content-api.late-hurskainen.workers.dev";
+const LOGIN_URL   = API_BASE + "/admin/login";
+const CONTENT_URL = API_BASE + "/content";
+
+// 2) Apufunktiot
+const qs  = (s, r=document) => r.querySelector(s);
+const qsa = (s, r=document) => [...r.querySelectorAll(s)];
+
+const loginView = qs("#login-view");
+const adminApp  = qs("#admin-app");
+const loginBtn  = qs("#btn-login");
+const logoutBtn = qs("#btn-logout");
+const pwInput   = qs("#pw");
+const loginError= qs("#login-error");
+const statusBox = qs("#status");
+const saveBtn   = qs("#btn-save");
+
+const heroFields  = qsa("[data-field]");
+const leadFields  = qsa("[data-lead]");
+const sectionRoots= qsa("[data-section]");
+
+const navButtons  = qsa(".nav button");
+const panels      = qsa("[data-panel-view]");
+
+const TOKEN_KEY = "intry_admin_token";
+const SECTION_KEYS = [
+  "yhdistys","tyopajat","axonia","omakshomma",
+  "autotasku","asuminen","tuotteet","hankkeet",
+  "jaseneksi","kesatyot"
+];
+
+let token = null;
+let model = {
+  heroTitle:"",
+  heroIngress:"",
+  heroCta:"",
+  leads:{},
+  sections:{}
+};
+
+// 3) Näkymän vaihto
+function showLogin(){
+  loginView.style.display = "flex";
+  adminApp.style.display  = "none";
+  loginError.textContent  = "";
+  pwInput.value = "";
+  pwInput.focus();
+}
+function showAdmin(){
+  loginView.style.display = "none";
+  adminApp.style.display  = "flex";
+}
+
+// 4) API-kutsut
+async function apiLogin(password){
+  const r = await fetch(LOGIN_URL, {
+    method:"POST",
+    headers:{ "Content-Type":"application/json" },
+    body: JSON.stringify({ password })
+  });
+  if(!r.ok) throw new Error("login " + r.status);
+  const j = await r.json();
+  if(!j.token) throw new Error("token puuttuu");
+  return j.token;
+}
+
+async function apiGetContent(){
+  const r = await fetch(CONTENT_URL, {
+    method:"GET",
+    headers:{ "Authorization":"Bearer " + token },
+    cache:"no-store"
+  });
+  if(r.status === 401) throw new Error("unauthorized");
+  if(!r.ok) throw new Error("get " + r.status);
+  return r.json();
+}
+
+async function apiSaveContent(payload){
+  const r = await fetch(CONTENT_URL, {
+    method:"POST",
+    headers:{
+      "Authorization":"Bearer " + token,
+      "Content-Type":"application/json"
+    },
+    body: JSON.stringify({ data: payload })
+  });
+  if(r.status === 401) throw new Error("unauthorized");
+  if(!r.ok) throw new Error("save " + r.status);
+  return r.json().catch(()=> ({}));
+}
+
+// 5) Lomakkeen täyttö
+function fillHeroAndLeads(data){
+  heroFields.forEach(el => {
+    const key = el.getAttribute("data-field");
+    el.value = data[key] || "";
+  });
+  const leads = data.leads || {};
+  leadFields.forEach(el => {
+    const key = el.getAttribute("data-lead");
+    el.value = leads[key] || "";
+  });
+}
+
+function buildSectionUI(){
+  const sections = model.sections || {};
+  sectionRoots.forEach(root => {
+    const name = root.getAttribute("data-section");
+    const cards = sections[name] || [];
+    root.innerHTML = "";
+
+    const title = document.createElement("h4");
+    title.textContent = name;
+    root.appendChild(title);
+
+    const container = document.createElement("div");
+    root.appendChild(container);
+
+    cards.forEach((card, index) => {
+      const wrapper = document.createElement("div");
+      wrapper.className = "item-card";
+      wrapper.innerHTML = `
+        <label style="font-size:12px;">Otsikko</label>
+        <input type="text" value="${card.title || ""}">
+        <label style="font-size:12px;">Teksti</label>
+        <textarea>${card.text || ""}</textarea>
+        <div class="item-actions">
+          <div style="display:flex;gap:4px;flex-wrap:wrap;">
+            <button type="button" class="btn-small" data-move="up">Ylös</button>
+            <button type="button" class="btn-small" data-move="down">Alas</button>
+          </div>
+          <button type="button" class="btn-small danger" data-delete>Poista</button>
+        </div>
+      `;
+
+      const titleInput = wrapper.querySelector("input");
+      const textArea   = wrapper.querySelector("textarea");
+      const btnUp      = wrapper.querySelector('[data-move="up"]');
+      const btnDown    = wrapper.querySelector('[data-move="down"]');
+      const btnDel     = wrapper.querySelector('[data-delete]');
+
+      titleInput.oninput = e => { card.title = e.target.value; };
+      textArea.oninput   = e => { card.text  = e.target.value; };
+
+      btnUp.onclick = () => {
+        if(index > 0){
+          cards.splice(index-1,0,cards.splice(index,1)[0]);
+          buildSectionUI();
+        }
+      };
+      btnDown.onclick = () => {
+        if(index < cards.length-1){
+          cards.splice(index+1,0,cards.splice(index,1)[0]);
+          buildSectionUI();
+        }
+      };
+      btnDel.onclick = () => {
+        cards.splice(index,1);
+        buildSectionUI();
+      };
+
+      container.appendChild(wrapper);
+    });
+
+    const addBtn = document.createElement("button");
+    addBtn.type = "button";
+    addBtn.className = "btn-small";
+    addBtn.textContent = "➕ Uusi kortti";
+    addBtn.style.marginTop = "6px";
+    addBtn.onclick = () => {
+      if(!sections[name]) sections[name] = [];
+      sections[name].push({ title:"Uusi kortti", text:"" });
+      buildSectionUI();
+    };
+    root.appendChild(addBtn);
+  });
+}
+
+function readFormToModel(){
+  heroFields.forEach(el => {
+    const key = el.getAttribute("data-field");
+    model[key] = el.value;
+  });
+  if(!model.leads) model.leads = {};
+  leadFields.forEach(el => {
+    const key = el.getAttribute("data-lead");
+    model.leads[key] = el.value;
+  });
+}
+
+// 6) Login + logout + tallennus
+async function doLogin(){
+  const pw = (pwInput.value || "").trim();
+  if(!pw){
+    loginError.textContent = "Syötä salasana.";
+    return;
+  }
+  loginError.textContent = "";
+  loginBtn.disabled = true;
+  loginBtn.textContent = "Kirjaudutaan…";
+
+  try{
+    const t = await apiLogin(pw);
+    token = t;
+    sessionStorage.setItem(TOKEN_KEY, t);
+
+    const content = await apiGetContent();
+    model.heroTitle   = content.heroTitle   || "";
+    model.heroIngress = content.heroIngress || "";
+    model.heroCta     = content.heroCta     || "";
+    model.leads       = content.leads       || {};
+    model.sections    = content.sections    || {};
+
+    SECTION_KEYS.forEach(k => {
+      if(!Array.isArray(model.sections[k])) model.sections[k] = [];
+    });
+
+    fillHeroAndLeads(model);
+    buildSectionUI();
+    showAdmin();
+    statusBox.textContent = "Kirjautunut";
+    statusBox.className = "status ok";
+  }catch(e){
+    console.error(e);
+    loginError.textContent = "Kirjautuminen epäonnistui (salasana tai API).";
+  }finally{
+    loginBtn.disabled = false;
+    loginBtn.textContent = "Kirjaudu sisään";
+  }
+}
+
+async function doSave(){
+  if(!token){
+    alert("Et ole kirjautunut.");
+    return;
+  }
+  readFormToModel();
+  saveBtn.disabled = true;
+  saveBtn.textContent = "Tallennetaan…";
+  statusBox.textContent = "Tallennetaan…";
+  statusBox.className = "status";
+
+  try{
+    await apiSaveContent(model);
+    statusBox.textContent = "Tallennettu.";
+    statusBox.className = "status ok";
+  }catch(e){
+    console.error(e);
+    if(String(e.message).includes("unauthorized")){
+      alert("Kirjautuminen vanhentui (401). Kirjaudu uudestaan.");
+      sessionStorage.removeItem(TOKEN_KEY);
+      token = null;
+      showLogin();
+    }else{
+      alert("Tallennus epäonnistui: " + e.message);
+      statusBox.textContent = "Virhe tallennuksessa.";
+      statusBox.className = "status err";
+    }
+  }finally{
+    saveBtn.disabled = false;
+    saveBtn.textContent = "💾 Tallenna";
+  }
+}
+
+// 7) Paneelin vaihto (sivupalkin napit)
+navButtons.forEach(btn => {
+  btn.addEventListener("click", () => {
+    const target = btn.getAttribute("data-panel");
+    navButtons.forEach(b => b.classList.toggle("active", b===btn));
+    panels.forEach(p => {
+      const id = p.getAttribute("data-panel-view");
+      p.style.display = (id === target) ? "block" : "none";
+    });
+  });
+
+});
+
+// 8) Eventit
+loginBtn.addEventListener("click", doLogin);
+pwInput.addEventListener("keydown", e => {
+  if(e.key === "Enter"){
+    e.preventDefault();
+    doLogin();
+  }
+});
+logoutBtn.addEventListener("click", () => {
+  token = null;
+  sessionStorage.removeItem(TOKEN_KEY);
+  showLogin();
+});
+saveBtn.addEventListener("click", doSave);
+
+// 9) Alku – aina login-näkymä
+showLogin();
+</script>
+</body>
+</html>

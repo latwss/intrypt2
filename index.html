@@ -1,293 +1,356 @@
 <!doctype html>
 <html lang="fi">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>INTRY – Iisalmen Nuorison Tuki</title>
-<meta name="description" content="INTRY tukee nuoria Iisalmessa – työpajoja, arjen tukea ja polkuja kohti opintoja ja työelämää.">
-<meta name="theme-color" content="#ff4fd8">
-
-<style>
-:root{
-  --pink:#ff4fd8;
-  --turq:#2befff;
-  --vio:#b57bff;
-  --ink:#0b1220;
-  --mut:#4b5a74;
-  --line:rgba(10,18,32,.12);
-  --rad:22px;
-  --shadow:0 20px 60px rgba(12,18,40,.16);
-  --ease:cubic-bezier(.16,1,.3,1);
-}
-*{box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{
-  margin:0;
-  font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
-  color:var(--ink);
-  background:
-    radial-gradient(1000px 600px at 10% -10%, rgba(255,79,216,.25), transparent 60%),
-    radial-gradient(900px 600px at 90% -10%, rgba(43,239,255,.25), transparent 60%),
-    linear-gradient(180deg,#fff,#f7f7ff);
-}
-a{text-decoration:none;color:inherit}
-.container{width:min(1180px,100%);margin:auto;padding:0 18px}
-
-/* ===== SKIP ===== */
-.skip{
-  position:absolute;left:-9999px;top:10px;
-  background:#fff;padding:10px 14px;border-radius:999px;
-  border:1px solid var(--line);box-shadow:var(--shadow);z-index:999
-}
-.skip:focus{left:12px}
-
-/* ===== TOPBAR & PC NAV ===== */
-.topbar{
-  position:sticky;top:0;z-index:50;
-  background:rgba(255,255,255,.85);
-  backdrop-filter:blur(14px);
-  border-bottom:1px solid var(--line);
-}
-.topbar-inner{
-  height:64px;display:flex;align-items:center;justify-content:space-between
-}
-.brand{display:flex;align-items:center;gap:10px;font-weight:900}
-.dot{
-  width:12px;height:12px;border-radius:999px;
-  background:linear-gradient(135deg,var(--pink),var(--turq),var(--vio))
-}
-
-.pcNav{display:flex;gap:18px;font-weight:900}
-.navItem{position:relative;padding:8px 12px;border-radius:999px;cursor:pointer}
-.navItem:hover{background:rgba(255,255,255,.9)}
-
-.dropdown{
-  position:absolute;top:44px;left:0;min-width:240px;
-  background:rgba(255,255,255,.96);
-  border-radius:18px;padding:12px;
-  box-shadow:0 30px 80px rgba(0,0,0,.18);
-  display:none
-}
-.navItem:hover .dropdown{display:block}
-.dropdown a{
-  display:block;padding:10px 12px;border-radius:12px;font-weight:800
-}
-.dropdown a:hover{background:rgba(255,79,216,.12)}
-
-.adminBtn{
-  padding:8px 14px;border-radius:999px;
-  background:linear-gradient(90deg,var(--pink),var(--turq),var(--vio));
-  color:#07121f
-}
-
-/* ===== HERO ===== */
-.hero{padding:80px 0 40px}
-.heroCard{
-  position:relative;padding:32px;border-radius:var(--rad);
-  background:rgba(255,255,255,.75);
-  backdrop-filter:blur(16px);
-  box-shadow:var(--shadow);overflow:hidden
-}
-.heroGlow{
-  position:absolute;inset:-140px;
-  background:
-    radial-gradient(320px 260px at 20% 20%, rgba(255,79,216,.45), transparent 70%),
-    radial-gradient(360px 260px at 85% 15%, rgba(43,239,255,.35), transparent 70%),
-    radial-gradient(300px 240px at 70% 90%, rgba(181,123,255,.28), transparent 70%);
-  pointer-events:none
-}
-.pillRow{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
-.pill{
-  padding:8px 12px;border-radius:999px;
-  background:rgba(255,255,255,.85);
-  border:1px solid var(--line);font-weight:800;font-size:12px
-}
-h1{font-size:clamp(32px,4.5vw,58px);margin:0 0 12px}
-.ingress{font-size:17px;color:var(--mut);max-width:70ch;margin-bottom:20px}
-.ctaRow a{
-  display:inline-block;padding:12px 18px;border-radius:999px;
-  font-weight:900;
-  background:linear-gradient(90deg,var(--pink),var(--turq),var(--vio));
-  color:#07121f;margin-right:10px
-}
-
-/* ===== SECTIONS ===== */
-section{padding:60px 0}
-h2{text-align:center;margin-bottom:10px}
-.lead{text-align:center;color:var(--mut);max-width:90ch;margin:0 auto 30px}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-@media(max-width:900px){.grid{grid-template-columns:1fr}}
-
-/* ===== RICH CARD ===== */
-.richCard{
-  padding:22px;border-radius:22px;
-  background:rgba(255,255,255,.9);
-  backdrop-filter:blur(14px);
-  border:1px solid var(--line);
-  box-shadow:0 18px 50px rgba(0,0,0,.14);
-  transition:transform .35s var(--ease), box-shadow .35s var(--ease)
-}
-.richCard:hover{
-  transform:translateY(-6px);
-  box-shadow:0 30px 80px rgba(0,0,0,.18)
-}
-.richCard h3{margin:0 0 8px}
-.richCard p{margin:0 0 10px;color:var(--mut);line-height:1.6}
-.richCard ul{margin:0 0 14px;padding-left:18px;color:var(--mut)}
-.richCard li{margin-bottom:6px}
-.richCard .cta{font-weight:900;font-size:13px;color:#ff2fbf}
-
-/* ===== FOOTER ===== */
-footer{text-align:center;padding:30px 0;color:var(--mut);font-weight:700}
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#ff4fd8" />
+  <title>INTRY – Iisalmen Nuorison Tuki ry</title>
+  <meta name="description" content="INTRY – nuorten tukipalveluita, työpajoja ja toimintaa Iisalmessa." />
+  <style>
+  :root{
+    --pink:#ff4fd8; --pink2:#ff7be6; --pink3:#ff2fbf;
+    --turq:#2befff; --vio:#b57bff;
+    --ink:#0b1220; --ink2:#10172a;
+    --mut:#4b5a74; --mut2:#6a7a98;
+    --line:rgba(10,18,32,.10);
+    --bg0:#ffffff; --bg1:#f7f7ff;
+    --rad:22px; --rad2:18px;
+    --shadow: 0 18px 55px rgba(12,18,40,.14);
+    --shadow2: 0 10px 28px rgba(12,18,40,.10);
+    --shadow3: 0 8px 18px rgba(12,18,40,.08);
+    --max: 1180px;
+    --ease: cubic-bezier(.2,.8,.2,1);
+    --ease2: cubic-bezier(.16,1,.3,1);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0;
+    font-family: system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;
+    color:var(--ink);
+    background:
+      radial-gradient(1200px 720px at 10% -5%, rgba(255,79,216,.30), transparent 60%),
+      radial-gradient(1000px 680px at 92% -10%, rgba(43,239,255,.23), transparent 58%),
+      radial-gradient(1000px 650px at 70% 0%, rgba(181,123,255,.22), transparent 60%),
+      linear-gradient(180deg, var(--bg0) 0%, var(--bg1) 55%, var(--bg0) 100%);
+    overflow-x:hidden;
+  }
+  a{color:inherit}
+  .container{width:min(var(--max), 100%); margin-inline:auto; padding:0 18px;}
+  
+  .topbar{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.58);backdrop-filter: blur(14px);border-bottom:1px solid rgba(10,18,32,.08);} 
+  .topbar-inner{height:66px;display:flex;align-items:center;justify-content:space-between;gap:12px;}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:950;letter-spacing:.2px;}
+  .logoDot{width:12px;height:12px;border-radius:999px;background:linear-gradient(135deg,var(--pink),var(--turq),var(--vio));box-shadow:0 10px 20px rgba(255,79,216,.18);} 
+  .brandText{background:linear-gradient(90deg,var(--pink3),var(--pink),var(--turq),var(--vio));-webkit-background-clip:text;color:transparent;font-size:18px;}
+  .nav{display:flex;gap:10px;flex-wrap:wrap;font-weight:850;font-size:13px;color:var(--ink2);} 
+  .nav a{text-decoration:none;padding:8px 12px;border-radius:999px;border:1px solid transparent;transition:transform .2s var(--ease), background .2s var(--ease), border-color .2s var(--ease);} 
+  .nav a:hover{background:rgba(255,255,255,.76);border-color:var(--line);transform:translateY(-1px);} 
+  
+  .hero{padding:72px 0 34px;}
+  .heroGrid{display:grid;grid-template-columns:1fr;gap:18px;align-items:stretch;}
+  .glass{border-radius:var(--rad);border:1px solid rgba(255,255,255,.55);background:rgba(255,255,255,.64);backdrop-filter: blur(14px);box-shadow:var(--shadow);} 
+  .heroCard{padding:28px 26px;position:relative;overflow:hidden;}
+  .heroGlow{position:absolute;inset:-130px;background:
+    radial-gradient(340px 280px at 18% 28%, rgba(255,79,216,.42), transparent 70%),
+    radial-gradient(380px 300px at 88% 18%, rgba(43,239,255,.26), transparent 70%),
+    radial-gradient(340px 280px at 70% 86%, rgba(181,123,255,.22), transparent 70%);
+    pointer-events:none;
+  }
+  .heroTitle{margin:0 0 12px;font-size:clamp(32px, 4.4vw, 60px);line-height:1.02;letter-spacing:-.8px;}
+  .heroIngress{margin:0 0 18px;color:var(--mut);font-size:17.2px;max-width:80ch;}
+  .pillRow{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 18px;}
+  .pill{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;background:rgba(255,255,255,.68);border:1px solid var(--line);font-weight:850;font-size:12px;color:var(--ink2);} 
+  .pill b{background:linear-gradient(90deg,var(--pink3),var(--pink),var(--turq),var(--vio));-webkit-background-clip:text;color:transparent;}
+  .ctaRow{display:flex;gap:10px;flex-wrap:wrap;align-items:center;}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:12px 16px;border-radius:999px;font-weight:900;text-decoration:none;border:1px solid transparent;cursor:pointer;user-select:none;transition:transform .22s var(--ease), box-shadow .22s var(--ease);} 
+  .btnPrimary{background:linear-gradient(90deg,var(--pink3),var(--pink),var(--turq),var(--vio));color:#07121f;box-shadow:0 18px 35px rgba(255,79,216,.20);} 
+  .btnGhost{background:rgba(255,255,255,.82);border-color:rgba(10,18,32,.12);color:var(--ink2);box-shadow:var(--shadow2);} 
+  .btn:hover{transform:translateY(-2px);} .btn:active{transform:translateY(0) scale(.99);} 
+  
+  .kpi{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px;}
+  @media(max-width:980px){.kpi{grid-template-columns:1fr;}}
+  .kpi .k{border-radius:var(--rad2);border:1px solid var(--line);background:rgba(255,255,255,.74);padding:14px;box-shadow:var(--shadow3);} 
+  .k .n{font-weight:950;font-size:22px;background:linear-gradient(90deg,var(--pink3),var(--pink),var(--turq),var(--vio));-webkit-background-clip:text;color:transparent;} 
+  .k .t{font-size:12px;color:var(--mut);font-weight:800;} 
+  
+  section{padding:58px 0;}
+  .sectionTitle{margin:0 0 8px;text-align:center;font-size:clamp(22px, 2.7vw, 36px);letter-spacing:-.5px;} 
+  .sectionLead{margin:0 auto 26px;max-width:96ch;text-align:center;color:var(--mut);font-size:15.8px;line-height:1.6;} 
+  
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;} 
+  @media(max-width:980px){.grid{grid-template-columns:1fr;}} 
+  
+  .aCard{position:relative;border-radius:var(--rad);border:1px solid rgba(255,255,255,.55);background:rgba(255,255,255,.78);backdrop-filter: blur(14px);box-shadow:var(--shadow2);padding:18px;overflow:hidden;transform:translateY(0);transition:transform .25s var(--ease2), box-shadow .25s var(--ease2), border-color .25s var(--ease2);} 
+  .aCard::before{content:"";position:absolute;inset:-90px;pointer-events:none;opacity:.9;background:
+    radial-gradient(240px 200px at 20% 20%, rgba(255,79,216,.28), transparent 70%),
+    radial-gradient(260px 220px at 82% 35%, rgba(43,239,255,.18), transparent 70%),
+    radial-gradient(240px 200px at 60% 92%, rgba(181,123,255,.16), transparent 70%);} 
+  .aCard:hover{transform:translateY(-6px);box-shadow:0 25px 62px rgba(12,18,40,.16);border-color:rgba(255,79,216,.26);} 
+  .aCard h3{margin:0 0 10px;font-size:18px;position:relative;} 
+  .aCard p{margin:0;color:var(--mut);font-size:14.2px;line-height:1.6;position:relative;} 
+  
+  .block{border-radius:var(--rad);border:1px solid rgba(255,255,255,.55);background:rgba(255,255,255,.74);backdrop-filter: blur(14px);box-shadow:var(--shadow2);padding:18px;} 
+  .block h3{margin:0 0 10px;} 
+  .block p{margin:0 0 10px;color:var(--mut);line-height:1.7;} 
+  .block ul{margin:0;padding-left:18px;color:var(--mut);line-height:1.7;} 
+  
+  footer{padding:26px 0;text-align:center;color:var(--mut);font-weight:800;} 
+  .small{font-size:12px;color:var(--mut2);font-weight:700;} 
+  
+  .reveal{opacity:0;transform:translateY(16px);transition:opacity .75s var(--ease2), transform .75s var(--ease2);will-change:opacity,transform;} 
+  .reveal.show{opacity:1;transform:none;} 
+  
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    .btn,.nav a,.aCard,.reveal{transition:none !important;}
+    .reveal{opacity:1;transform:none;}
+  }
+  </style>
 </head>
-
 <body>
-
-<a href="#etusivu" class="skip">Siirry pääsisältöön</a>
-
 <div class="topbar">
   <div class="container topbar-inner">
-    <div class="brand"><span class="dot"></span>INTRY</div>
-
-    <nav class="pcNav">
-      <div class="navItem">Palvelut
-        <div class="dropdown">
-          <a href="#palvelut">Arjen tuki</a>
-          <a href="#palvelut">Työpajat</a>
-          <a href="#palvelut">Ohjaus</a>
-        </div>
-      </div>
-
-      <div class="navItem">Toiminta
-        <div class="dropdown">
-          <a href="#yhdistys">Yhdistys</a>
-          <a href="#tyopajat">Työpajat</a>
-          <a href="#axonia">Äxöniä</a>
-          <a href="#omakshomma">Omaks Hommaks</a>
-          <a href="#autotasku">Autotasku</a>
-        </div>
-      </div>
-
+    <div class="brand"><span class="logoDot" aria-hidden="true"></span><span class="brandText">INTRY</span></div>
+    <nav class="nav" aria-label="Päävalikko">
+      <a href="#palvelut">Palvelut</a>
+      <a href="#toiminta">Toiminta</a>
       <a href="#yhteys">Yhteys</a>
-
-      <!-- ✅ TÄMÄ TOIMII -->
-      <a href="/admin/" class="adminBtn">Kirjaudu</a>
+      <a href="/admin/" title="Hallinta">Admin</a>
     </nav>
   </div>
 </div>
-
 <header class="hero" id="etusivu">
-  <div class="container">
-    <div class="heroCard">
-      <div class="heroGlow"></div>
-
+  <div class="container heroGrid">
+    <div class="glass heroCard reveal">
+      <div class="heroGlow" aria-hidden="true"></div>
       <div class="pillRow">
-        <span class="pill">✨ INTRY • Iisalmi</span>
-        <span class="pill">💗 Nuorten tukena arjessa</span>
-        <span class="pill">⚡ Sisältö päivittyy helposti</span>
+        <span class="pill">✨ <b>INTRY</b> • Iisalmi</span>
       </div>
-
-      <h1 id="hero-title">INTRY – Iisalmen Nuorison Tuki</h1>
-      <p class="ingress" id="hero-ingress">
-        Nuorten tukipalveluita, työpajoja ja toimintaa Iisalmessa.
-      </p>
-
+      <h1 class="heroTitle" id="hero-title">INTRY – Iisalmen Nuorison Tuki ry</h1>
+      <p class="heroIngress" id="hero-ingress">Nuorten tukipalveluita, työpajoja ja toimintaa Iisalmessa.</p>
       <div class="ctaRow">
-        <a href="#toiminta">Tutustu toimintaan</a>
-        <a href="#yhteys">Ota yhteyttä</a>
+        <a class="btn btnPrimary" href="#palvelut"><span id="hero-cta">Tutustu</span> →</a>
+        <a class="btn btnGhost" href="#yhteys">Ota yhteyttä</a>
       </div>
+      <div class="kpi">
+        <div class="k"><div class="n">Matalalla</div><div class="t">kynnys tulla mukaan</div></div>
+        <div class="k"><div class="n">Yhdessä</div><div class="t">tekeminen ja tuki</div></div>
+        <div class="k"><div class="n">Kohti</div><div class="t">opintoja ja työelämää</div></div>
+      </div>
+      <div class="small" style="margin-top:12px;">Kotisivu hakee heron sisällön automaattisesti Worker/KV:stä jokaisella latauksella.</div>
     </div>
   </div>
 </header>
-
 <section id="palvelut">
   <div class="container">
-    <h2>Palvelut</h2>
-    <p class="lead">INTRY tarjoaa nuorille matalan kynnyksen tukea, ohjausta ja tekemistä.</p>
-
+    <h2 class="sectionTitle reveal">Palvelut</h2>
+    <p class="sectionLead reveal" style="transition-delay:.06s">INTRY tarjoaa nuorille matalan kynnyksen tukea, ohjausta ja yhteisöllistä tekemistä. Tavoitteena on löytää arkeen rytmiä, vahvistaa osaamista ja rakentaa polkuja kohti opintoja ja työelämää.</p>
     <div class="grid">
-      <div class="richCard"><h3>Arjen tuki</h3><p>Tukea asiointiin ja arjen hallintaan.</p></div>
-      <div class="richCard"><h3>Työpajat</h3><p>Tekemällä oppimista turvallisessa ympäristössä.</p></div>
-      <div class="richCard"><h3>Ohjaus</h3><p>Rinnalla kulkemista kohti opintoja ja työelämää.</p></div>
+      <div class="aCard reveal" style="transition-delay:.10s"><h3>Arjen tuki</h3><p>Apua aikatauluihin, asiointiin, hakemuksiin ja arjen peruspalikoihin. Tehdään selkeä suunnitelma ja edetään yhdessä.</p></div>
+      <div class="aCard reveal" style="transition-delay:.14s"><h3>Työpajat</h3><p>Tekemällä oppimista, onnistumisen kokemuksia ja turvallinen ympäristö harjoitella taitoja.</p></div>
+      <div class="aCard reveal" style="transition-delay:.18s"><h3>Ohjaus</h3><p>Rinnalla kulkemista, tavoitepolkuja ja tukea seuraaviin askeliin – opintoihin, työhön ja palveluihin.</p></div>
+    </div>
+    <div class="block reveal" style="margin-top:16px;transition-delay:.10s">
+      <h3>Tietoa INTRYstä (tiiviisti)</h3>
+      <p>INTRY – Iisalmen Nuorison Tuki ry on paikallinen toimija, jonka ytimessä on turvallinen kohtaaminen. Meillä arjen tuki, työpajat ja ohjaus rakentuvat selkeyden, rauhallisen etenemisen ja pienten onnistumisten varaan.</p>
+      <p>Kun muokkaat heron tekstejä administa, kotisivu hakee uudet arvot taustasta (Worker + KV) jokaisella latauksella. Näin sisältö pysyy ajantasaisena ilman että kotisivun tiedostoja tarvitsee muokata joka kerta.</p>
+      <ul>
+        <li>Matalan kynnyksen kohtaamispaikka</li>
+        <li>Ohjattu tekeminen ja työpajat</li>
+        <li>Yksilöllinen tuki ja jatkopolut</li>
+        <li>Yhteistyö alueen toimijoiden kanssa</li>
+      </ul>
     </div>
   </div>
 </section>
-
 <section id="toiminta">
   <div class="container">
-    <h2>Toiminta</h2>
-    <p class="lead">Alla olevat sisällöt tulevat suoraan ylläpidosta.</p>
-
-    <h3 id="yhdistys">Yhdistys</h3>
-    <p id="lead-yhdistys"></p>
-    <div class="grid" id="cards-yhdistys"></div>
-
-    <h3 id="tyopajat">Työpajat</h3>
-    <p id="lead-tyopajat"></p>
-    <div class="grid" id="cards-tyopajat"></div>
-  </div>
-</section>
-
-<section id="yhteys">
-  <div class="container">
-    <h2>Yhteys</h2>
+    <h2 class="sectionTitle reveal">Toiminta – INTRYn osa-alueet</h2>
+    <p class="sectionLead reveal" style="transition-delay:.06s">Alla olevat osiot kuvaavat INTRYn arkea. Jokaiselle osa-alueelle löytyy esimerkkitekstit ja kortit, joita voidaan myöhemmin ohjata administa.</p>
+    <div id="yhdistys" style="padding-top:16px"></div>
+    <h3 class="sectionTitle reveal" style="text-align:left;margin-top:28px">Yhdistys</h3>
+    <p class="sectionLead reveal" style="text-align:left;margin-left:0;margin-right:0" id="lead-yhdistys">INTRY on paikallinen nuorten tukitoimija Iisalmessa. Meillä kohtaaminen on turvallista ja eteneminen konkreettista: arjen selkeyttä, ohjausta ja pieniä askelia kohti opintoja ja työtä.</p>
     <div class="grid">
-      <div class="richCard"><h3>Osoite</h3><p>Karjalankatu 36, Iisalmi</p></div>
-      <div class="richCard"><h3>Sähköposti</h3><p>anni.leppanen@intry.fi</p></div>
-      <div class="richCard"><h3>Puhelin</h3><p>044 733 1151</p></div>
+      <div class="aCard reveal" style="transition-delay:0.10s"><h3>Arvot</h3><p>Kohtaaminen, luottamus ja nuoren yksilöllinen tuki – turvallinen tila, jossa saa olla oma itsensä.</p>
+<p class=\"small\">Turvallinen kohtaaminen, luottamus ja kunnioitus – jokainen saa tulla sellaisena kuin on.</p></div>
+      <div class="aCard reveal" style="transition-delay:0.14s"><h3>Yhteistyö</h3><p>Teemme yhteistyötä oppilaitosten, järjestöjen ja alueen toimijoiden kanssa.</p>
+<p class=\"small\">Teemme yhteistyötä koulun, palvelujen ja verkostojen kanssa, jotta nuori ei jää yksin.</p></div>
+      <div class="aCard reveal" style="transition-delay:0.18s"><h3>Toimintatapa</h3><p>Pienet askeleet, selkeä rytmi ja konkreettinen tuki – ilman suorituspainetta.</p>
+<p class=\"small\">Selkeys + tekeminen: puhutaan vähemmän ja tehdään enemmän yhdessä.</p></div>
+    </div>
+    <div id="tyopajat" style="padding-top:16px"></div>
+    <h3 class="sectionTitle reveal" style="text-align:left;margin-top:28px">Työpajat</h3>
+    <p class="sectionLead reveal" style="text-align:left;margin-left:0;margin-right:0" id="lead-tyopajat">Työpajoissa opitaan tekemällä: arjen rytmi, ohjaus ja yhteisö. Tavoitteena on vahvistaa taitoja ja itseluottamusta niin, että seuraava askel tuntuu mahdolliselta.</p>
+    <div class="grid">
+      <div class="aCard reveal" style="transition-delay:0.10s"><h3>Peruspajat</h3><p>Rytmiä arkeen ja ohjattua tekemistä turvallisessa ympäristössä.</p>
+<p class=\"small\">Selkeä päivärytmi ja turvallinen porukka – aloittaminen on helppoa, vaikka arki olisi sekavaa.</p></div>
+      <div class="aCard reveal" style="transition-delay:0.14s"><h3>Luova tekeminen</h3><p>Ideoita ja projekteja: opitaan tekemällä ja kokeilemalla.</p>
+<p class=\"small\">Luovuuden kautta syntyy onnistumisia: ideointi, tekeminen ja näkyvä lopputulos.</p></div>
+      <div class="aCard reveal" style="transition-delay:0.18s"><h3>Yksilöllinen tuki</h3><p>Tavoitteet sovitaan tilanteen mukaan – eteneminen on joustavaa.</p>
+<p class=\"small\">Tavoitteet sovitaan yhdessä. Pienet askeleet ovat sallittuja – tärkeintä on suunta.</p></div>
+    </div>
+    <div id="axonia" style="padding-top:16px"></div>
+    <h3 class="sectionTitle reveal" style="text-align:left;margin-top:28px">Äxöniä</h3>
+    <p class="sectionLead reveal" style="text-align:left;margin-left:0;margin-right:0" id="lead-axonia">Äxöniä tarjoaa rinnalla kulkemista silloin, kun arki kuormittaa tai suunta on vielä auki. Tuki voi olla keskustelua, asioiden järjestämistä tai yhdessä tekemistä.</p>
+    <div class="grid">
+      <div class="aCard reveal" style="transition-delay:0.10s"><h3>Äxöniä – tuki</h3><p>Kuvaus siitä, mitä osio tarjoaa käytännössä INTRYllä.</p>
+<p class=\"small\">Sopii tilanteisiin, joissa tarvitaan rinnalla kulkemista ja arjen kuorman keventämistä.</p></div>
+      <div class="aCard reveal" style="transition-delay:0.14s"><h3>Äxöniä – tekeminen</h3><p>Esimerkkejä tekemisestä ja arjen tuesta.</p>
+<p class=\"small\">Selkeytetään paperit, aikataulut ja asiointi – ja harjoitellaan arjen taitoja.</p></div>
+      <div class="aCard reveal" style="transition-delay:0.18s"><h3>Äxöniä – eteneminen</h3><p>Askel kerrallaan, tavoitteellisesti mutta inhimillisesti.</p>
+<p class=\"small\">Kun suunta löytyy, siirrytään kohti opintoja, työtä tai palveluita.</p></div>
+    </div>
+    <div id="omakshomma" style="padding-top:16px"></div>
+    <h3 class="sectionTitle reveal" style="text-align:left;margin-top:28px">Omaks Hommaks</h3>
+    <p class="sectionLead reveal" style="text-align:left;margin-left:0;margin-right:0" id="lead-omakshomma">Omaks Hommaks on nuorten näköisiä projekteja: ideointia, kokeiluja ja yhteisöllistä tekemistä. Tekeminen auttaa löytämään omia vahvuuksia ja kiinnostuksia.</p>
+    <div class="grid">
+      <div class="aCard reveal" style="transition-delay:0.10s"><h3>Omaks Hommaks – tuki</h3><p>Kuvaus siitä, mitä osio tarjoaa käytännössä INTRYllä.</p>
+<p class=\"small\">Tukea ideoiden käynnistämiseen ja oman jutun löytämiseen ilman suorituspainetta.</p></div>
+      <div class="aCard reveal" style="transition-delay:0.14s"><h3>Omaks Hommaks – tekeminen</h3><p>Esimerkkejä tekemisestä ja arjen tuesta.</p>
+<p class=\"small\">Projektit voivat olla pienistä kokeiluista pidempiin yhteisiin tekemisiin.</p></div>
+      <div class="aCard reveal" style="transition-delay:0.18s"><h3>Omaks Hommaks – eteneminen</h3><p>Askel kerrallaan, tavoitteellisesti mutta inhimillisesti.</p>
+<p class=\"small\">Lopuksi katsotaan mitä opittiin – ja mihin se voi viedä seuraavaksi.</p></div>
+    </div>
+    <div id="autotasku" style="padding-top:16px"></div>
+    <h3 class="sectionTitle reveal" style="text-align:left;margin-top:28px">Autotasku</h3>
+    <p class="sectionLead reveal" style="text-align:left;margin-left:0;margin-right:0" id="lead-autotasku">Autotaskussa harjoitellaan teknistä tekemistä turvallisesti ja ohjatusti. Samalla vahvistetaan työelämätaitoja: yhteistyö, vastuu ja tekemisen suunnittelu.</p>
+    <div class="grid">
+      <div class="aCard reveal" style="transition-delay:0.10s"><h3>Autotasku – tuki</h3><p>Kuvaus siitä, mitä osio tarjoaa käytännössä INTRYllä.</p>
+<p class=\"small\">Turvallinen paikka harjoitella: ohjaus, välineet ja selkeä tekemisen rakenne.</p></div>
+      <div class="aCard reveal" style="transition-delay:0.14s"><h3>Autotasku – tekeminen</h3><p>Esimerkkejä tekemisestä ja arjen tuesta.</p>
+<p class=\"small\">Opitaan työvälineitä, huoltoa ja projektityötä – samalla yhteistyötaitoja.</p></div>
+      <div class="aCard reveal" style="transition-delay:0.18s"><h3>Autotasku – eteneminen</h3><p>Askel kerrallaan, tavoitteellisesti mutta inhimillisesti.</p>
+<p class=\"small\">Kun taidot kasvavat, voidaan rakentaa polku työharjoitteluun tai opintoihin.</p></div>
+    </div>
+    <div id="asuminen" style="padding-top:16px"></div>
+    <h3 class="sectionTitle reveal" style="text-align:left;margin-top:28px">Asuminen</h3>
+    <p class="sectionLead reveal" style="text-align:left;margin-left:0;margin-right:0" id="lead-asuminen">Asumisen tuki tarkoittaa itsenäisen elämän taitoja: raha-asiat, arjen suunnittelu, kodin perusasiat ja palvelujen selkeyttäminen. Tavoite on, että arki tuntuu hallittavalta.</p>
+    <div class="grid">
+      <div class="aCard reveal" style="transition-delay:0.10s"><h3>Asuminen – tuki</h3><p>Kuvaus siitä, mitä osio tarjoaa käytännössä INTRYllä.</p>
+<p class=\"small\">Selkeytetään arjen perusasiat: aikataulut, laskut, ruoka, siisteys ja palvelut.</p></div>
+      <div class="aCard reveal" style="transition-delay:0.14s"><h3>Asuminen – tekeminen</h3><p>Esimerkkejä tekemisestä ja arjen tuesta.</p>
+<p class=\"small\">Harjoitellaan konkreettisesti: budjetti, asiointi, hakemukset ja kodin rutiinit.</p></div>
+      <div class="aCard reveal" style="transition-delay:0.18s"><h3>Asuminen – eteneminen</h3><p>Askel kerrallaan, tavoitteellisesti mutta inhimillisesti.</p>
+<p class=\"small\">Tavoitteet pilkotaan pieniksi: yksi muutos kerrallaan, jotta se pysyy.</p></div>
+    </div>
+    <div id="tuotteet" style="padding-top:16px"></div>
+    <h3 class="sectionTitle reveal" style="text-align:left;margin-top:28px">Tuotteet</h3>
+    <p class="sectionLead reveal" style="text-align:left;margin-left:0;margin-right:0" id="lead-tuotteet">Työpajoissa syntyy tuotteita ja projekteja. Ideasta tehdään yhdessä toteutus – ja opitaan samalla suunnittelua, laatua ja loppuun viemistä.</p>
+    <div class="grid">
+      <div class="aCard reveal" style="transition-delay:0.10s"><h3>Tuotteet – tuki</h3><p>Kuvaus siitä, mitä osio tarjoaa käytännössä INTRYllä.</p>
+<p class=\"small\">Tuki ideasta toteutukseen: suunnittelu, työvaiheet ja aikataulu tehdään yhdessä.</p></div>
+      <div class="aCard reveal" style="transition-delay:0.14s"><h3>Tuotteet – tekeminen</h3><p>Esimerkkejä tekemisestä ja arjen tuesta.</p>
+<p class=\"small\">Harjoitellaan laatua, viimeistelyä ja projektin loppuun viemistä.</p></div>
+      <div class="aCard reveal" style="transition-delay:0.18s"><h3>Tuotteet – eteneminen</h3><p>Askel kerrallaan, tavoitteellisesti mutta inhimillisesti.</p>
+<p class=\"small\">Valmis tuote antaa onnistumisen kokemuksen – ja näyttää omaa osaamista.</p></div>
+    </div>
+    <div id="hankkeet" style="padding-top:16px"></div>
+    <h3 class="sectionTitle reveal" style="text-align:left;margin-top:28px">Hankkeet</h3>
+    <p class="sectionLead reveal" style="text-align:left;margin-left:0;margin-right:0" id="lead-hankkeet">Hankkeissa kehitetään uusia tapoja tukea nuoria. Kokeillaan, kerätään palautetta ja viedään toimivat ratkaisut osaksi arkea.</p>
+    <div class="grid">
+      <div class="aCard reveal" style="transition-delay:0.10s"><h3>Hankkeet – tuki</h3><p>Kuvaus siitä, mitä osio tarjoaa käytännössä INTRYllä.</p>
+<p class=\"small\">Hankkeissa voidaan tarjota uusia toimintamuotoja, ryhmiä tai yksilötukea tarpeen mukaan.</p></div>
+      <div class="aCard reveal" style="transition-delay:0.14s"><h3>Hankkeet – tekeminen</h3><p>Esimerkkejä tekemisestä ja arjen tuesta.</p>
+<p class=\"small\">Kokeillaan käytännössä: työpajoja, teemapäiviä ja yhteistyötä kumppaneiden kanssa.</p></div>
+      <div class="aCard reveal" style="transition-delay:0.18s"><h3>Hankkeet – eteneminen</h3><p>Askel kerrallaan, tavoitteellisesti mutta inhimillisesti.</p>
+<p class=\"small\">Arvioidaan mikä toimii – ja tehdään siitä pysyvä osa toimintaa.</p></div>
+    </div>
+    <div id="jaseneksi" style="padding-top:16px"></div>
+    <h3 class="sectionTitle reveal" style="text-align:left;margin-top:28px">Jäseneksi</h3>
+    <p class="sectionLead reveal" style="text-align:left;margin-left:0;margin-right:0" id="lead-jaseneksi">Jäsenenä olet mukana mahdollistamassa nuorten tukea Iisalmessa. Jäsenyys voi olla pieni maksu, osallistumista tai vain tuki sille, että toiminta jatkuu.</p>
+    <div class="grid">
+      <div class="aCard reveal" style="transition-delay:0.10s"><h3>Jäseneksi – tuki</h3><p>Kuvaus siitä, mitä osio tarjoaa käytännössä INTRYllä.</p>
+<p class=\"small\">Jäsenyys tukee nuorten arkea: jokainen jäsen auttaa mahdollistamaan matalan kynnyksen toiminnan.</p></div>
+      <div class="aCard reveal" style="transition-delay:0.14s"><h3>Jäseneksi – tekeminen</h3><p>Esimerkkejä tekemisestä ja arjen tuesta.</p>
+<p class=\"small\">Voit osallistua tapahtumiin, vapaaehtoisuuteen tai jakaa osaamistasi, jos haluat.</p></div>
+      <div class="aCard reveal" style="transition-delay:0.18s"><h3>Jäseneksi – eteneminen</h3><p>Askel kerrallaan, tavoitteellisesti mutta inhimillisesti.</p>
+<p class=\"small\">Jäseneksi liittyminen on helppoa – saat myös tietoa toiminnasta ja kutsuja.</p></div>
+    </div>
+    <div id="kesatyot" style="padding-top:16px"></div>
+    <h3 class="sectionTitle reveal" style="text-align:left;margin-top:28px">Kesätyöt</h3>
+    <p class="sectionLead reveal" style="text-align:left;margin-left:0;margin-right:0" id="lead-kesatyot">Kesätyöt ja polut työelämään: tukea hakemiseen, CV:hen ja työnhaun käytäntöihin. Harjoitellaan yhdessä, jotta työnhaku ei jää yksin tehtäväksi.</p>
+    <div class="grid">
+      <div class="aCard reveal" style="transition-delay:0.10s"><h3>Kesätyöt – tuki</h3><p>Kuvaus siitä, mitä osio tarjoaa käytännössä INTRYllä.</p>
+<p class=\"small\">Käydään läpi tilanne, toiveet ja vaihtoehdot. Tehdään yhdessä selkeä suunnitelma työnhakuun.</p></div>
+      <div class="aCard reveal" style="transition-delay:0.14s"><h3>Kesätyöt – tekeminen</h3><p>Esimerkkejä tekemisestä ja arjen tuesta.</p>
+<p class=\"small\">Tehdään CV ja hakemus, harjoitellaan yhteydenottoja ja haastattelua – askel kerrallaan.</p></div>
+      <div class="aCard reveal" style="transition-delay:0.18s"><h3>Kesätyöt – eteneminen</h3><p>Askel kerrallaan, tavoitteellisesti mutta inhimillisesti.</p>
+<p class=\"small\">Sovitaan seuraava tehtävä ja pidetään kiinni rytmistä: seuranta, palaute ja uudet haut.</p></div>
     </div>
   </div>
 </section>
+<section id="yhteys">
+ <div class="container">
+  <h2 class="sectionTitle reveal">Yhteys</h2>
+  <p class="sectionLead reveal" style="transition-delay:.06s">
+    Ota yhteyttä matalalla kynnyksellä. Kerro lyhyesti tilanteesta – me autamme hahmottamaan seuraavan askeleen.
+  </p>
 
-<footer>© <span id="year"></span> INTRY – Iisalmen Nuorison Tuki</footer>
+  <div class="grid">
 
+   <div class="aCard reveal" style="transition-delay:.10s">
+    <h3>Petri Karhu</h3>
+    <p><b>Yhteyshenkilö</b></p>
+    <p>Kun tarvitset rauhallisen alun: tilanteen kartoitus, arjen rytmi ja jatkopolkujen selkeytys.</p>
+    <p>
+      Puhelin: <a href="tel:+358401234567">040 123 4567</a><br>
+      Sähköposti: <a href="mailto:petri.karhu@example.fi">petri.karhu@example.fi</a>
+    </p>
+   </div>
+
+   <div class="aCard reveal" style="transition-delay:.14s">
+    <h3>Anni Leppänen</h3>
+    <p><b>Yhteyshenkilö</b></p>
+    <p>Kysymykset toiminnasta, mukaan tulemisesta ja yhteistyöstä – Anni ohjaa oikeaan paikkaan.</p>
+    <p>
+      Puhelin: <a href="tel:+358447331151">044 733 1151</a><br>
+      Sähköposti: <a href="mailto:anni.leppanen@intry.fi">anni.leppanen@intry.fi</a>
+    </p>
+   </div>
+
+   <div class="aCard reveal" style="transition-delay:.18s">
+    <h3>Toimipiste</h3>
+    <p>Karjalankatu 36, 74120 Iisalmi</p>
+    <p class="small">Tapaamiset sovitaan etukäteen, jotta voimme varata sinulle parahaan ajan.</p>
+   </div>
+
+  </div>
+ </div>
+</section>
+<footer>
+  <div class="container">
+    © <span id="year"></span> INTRY – Iisalmen Nuorison Tuki ry
+    <div class="small">Pinkki Apple‑tyyli + INTRY‑gradientit. Hero päivittyy administa Worker/KV:n kautta.</div>
+    <div id="err" class="small" aria-live="polite" style="margin-top:8px;"></div>
+  </div>
+</footer>
 <script>
-document.getElementById("year").textContent=new Date().getFullYear();
-
-const API="https://intry-content-api.late-hurskainen.workers.dev/content";
-const esc=s=>String(s||"").replace(/[&<>"]/g,m=>({ "&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[m]));
-
-fetch(API)
-  .then(r=>r.json())
-  .then(d=>{
-    if(d.heroTitle) document.getElementById("hero-title").textContent=d.heroTitle;
-
-    if(d.heroIngress) document.getElementById("hero-ingress").textContent=d.heroIngress;
-
-    if(d.leads){
-      for(const k in d.leads){
-        const el=document.getElementById("lead-"+k);
-        if(el) el.textContent=d.leads[k];
+document.getElementById('year').textContent = new Date().getFullYear();
+const els = document.querySelectorAll('.reveal');
+const io = new IntersectionObserver((entries)=>{ for(const e of entries){ if(e.isIntersecting){ e.target.classList.add('show'); io.unobserve(e.target); } } }, { threshold: 0.12 });
+els.forEach(el=>io.observe(el));
+const WORKER_URL = 'https://intry-content-api.late-hurskainen.workers.dev';
+(async ()=>{
+  try{
+    const r = await fetch(WORKER_URL, { cache: 'no-store' });
+    if(!r.ok) throw new Error('GET epäonnistui ('+r.status+')');
+    const d = await r.json();
+    if(d.heroTitle) document.getElementById('hero-title').textContent = d.heroTitle;
+    if(d.heroIngress) document.getElementById('hero-ingress').textContent = d.heroIngress;
+    if(d.heroCta) document.getElementById('hero-cta').textContent = d.heroCta;
+    if(d.leads && typeof d.leads === 'object'){
+      for(const [k,v] of Object.entries(d.leads)){
+        const el = document.getElementById('lead-' + k);
+        if(el && v) el.textContent = v;
       }
     }
-
-    if(d.sections){
-      for(const s in d.sections){
-        const root=document.getElementById("cards-"+s);
-        if(!root) continue;
-        root.innerHTML="";
-        d.sections[s].forEach(c=>{
-          const el=document.createElement("div");
-          el.className="richCard";
-
-          let bullets="";
-          if(Array.isArray(c.bullets)){
-            bullets="<ul>"+c.bullets.map(b=>"<li>"+esc(b)+"</li>").join("")+"</ul>";
-          }
-
-          el.innerHTML=`
-            <h3>${esc(c.title)}</h3>
-            <p>${esc(c.text)}</p>
-            ${bullets}
-            ${c.cta?`<span class="cta">${esc(c.cta)} →</span>`:""}
-          `;
-          root.appendChild(el);
-        });
-      }
-    }
-  });
+  } catch(e){
+    console.warn(e);
+    const msg = document.getElementById('err');
+    if(msg) msg.textContent = 'Huom: taustan sisältöä ei saatu ladattua. Sivu käyttää oletustekstejä.';
+  }
+})();
 </script>
-
 </body>
 </html>

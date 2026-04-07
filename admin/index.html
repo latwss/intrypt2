@@ -305,6 +305,7 @@
       <button data-panel="hero" class="active">Hero</button>
       <button data-panel="leads">Lead-tekstit</button>
       <button data-panel="cards">Kortit</button>
+ <button data-panel="images">Kuvat</button>
     </div>
 
     <div class="sidebar-footer">
@@ -398,7 +399,37 @@
         <div data-section="kesatyot"></div>
       </section>
 
-      <!-- SAVE -->
+      
+<section class="card" data-panel-view="images" style="display:none">
+ <h3>📷 Kuvat sivulle</h3>
+ <p class="small">
+ Tästä kohdasta voit lisätä kuvia sivulle. Kuvat voidaan myöhemmin liittää
+ eri osioihin (esim. etusivu, työpajat, hankkeet).
+ </p>
+
+ <label>Kuvan URL</label>
+ <input placeholder="https://...">
+
+ <label>Lataa kuva tiedostona</label>
+ <input type="file" accept="image/*">
+
+ <p class="small" style="margin-top:6px;">
+ Voit valita kuvan omalta koneeltasi. Tiedoston lähetys voidaan kytkeä
+ palvelimeen myöhemmin – tämä ei vielä muuta sivun sisältöä.
+ </p>
+
+
+ <label>Vaihtoehtoinen teksti (alt)</label>
+ <input placeholder="Kuvaus kuvasta saavutettavuutta varten">
+
+ <p class="small" style="margin-top:8px;">
+ Huom: tämä näkymä lisää vain kuvien hallinnan käyttöliittymän.
+ Varsinainen tallennus ja kuvien näyttäminen sivulla voidaan kytkeä
+ seuraavassa vaiheessa ilman, että nykyinen sisältö muuttuu.
+ </p>
+</section>
+
+<!-- SAVE -->
       <section class="card">
         <button class="primary" id="btn-save">💾 Tallenna</button>
         <p class="small">
